@@ -86,6 +86,7 @@ export default withOktaAuth(function Event(props) {
         }
       ).catch((e) => console.log(e));
       const json = await response.json().catch((e) => console.log(e));
+      console.log(json);
       setBracketData(json);
     }
     getBracket();
@@ -106,8 +107,9 @@ export default withOktaAuth(function Event(props) {
               <LoadingSpin />
             ) : (
               <ReactTournament
-                aspectRatio={4}
-                width={1}
+                aspectRatio={1}
+                width={4}
+
                 data={bracketData.data}
               />
             )}

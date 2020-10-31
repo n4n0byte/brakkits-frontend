@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import Nav from "../General/Nav";
 import LoadingSpin from "react-loading-spin";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   MDBCard,
   MDBCol,
@@ -62,6 +62,48 @@ export default withOktaAuth(function DynamicBtn(props) {
     getTokens();
   }, [authenticated]);
 
+  // // delete an event
+  // useEffect(() => {
+  //   async function deleteEvent() {
+  //     const response = await fetch(
+  //       `http://localhost:8080/delete/${props.eventName}`,
+  //       {
+  //         headers: new Headers({
+  //           method: "POST",
+  //           Authorization: `Bearer ${accessToken}`,
+  //         }),
+  //       }
+  //     ).catch((e) => console.log(e));
+  //     // const json = await response.json().catch((e) => console.log(e));
+  
+  //     // console.log(json);
+  //   }
+  //   if (accessToken) {
+  //     deleteEvent();
+  //   }
+  // }, [accessToken]);
+
+  const fetchRequest = useCallback(() => {
+    async function deleteEvent() {
+      const response = await fetch(
+        `http://localhost:8080/deleteEvent/${props.eventName}`,
+        {
+          headers: new Headers({
+            method: "post",
+            Authorization: `Bearer ${accessToken}`,
+          }),
+        }
+      ).catch((e) => console.log(e));
+      const json = await response.json().catch((e) => console.log(e));
+  
+      console.log(json);
+    }
+    if (accessToken) {
+      deleteEvent();
+    }
+  }, [accessToken]);
+
+
   // get stagelist
   useEffect(() => {
     async function getPrivs() {
@@ -110,7 +152,7 @@ export default withOktaAuth(function DynamicBtn(props) {
       {eventPrivs ? (
         eventPrivs.owner ? (
           <div className="mx-auto">
-            <button className="btn btn-danger">Delete Tournament</button>
+            <button onClick={fetchRequest} className="btn btn-danger">Delete Tournament</button>
           </div>
         ) : (
           <></>

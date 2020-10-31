@@ -5,9 +5,6 @@ export default function Error(props) {
     return (
             <>
                 Oops, something went wrong. Please try again at a later time
-                <div>
-                    {props && props.location.state.error} 
-                </div>
             </>
     );
 }

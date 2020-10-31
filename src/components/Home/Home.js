@@ -71,9 +71,7 @@ export default withOktaAuth(function Home(props) {
           Authorization: `Bearer ${accessToken}`,
         }),
       }).then(
-        (json) => {
-          json().catch((e) => console.log(e));
-          console.log(json);
+        (response) => {         
           setSentUser(true);
         }        
       )
@@ -84,6 +82,8 @@ export default withOktaAuth(function Home(props) {
 
     storeUser();
   }, [accessToken]);
+
+
 
   /**
    * queries the rest api for events

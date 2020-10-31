@@ -28,6 +28,11 @@ import {
   MDBDropdownMenu,
 } from "mdbreact";
 
+import {
+  useHistory,
+} from "react-router-dom";
+
+
 import withOktaAuth from "@okta/okta-react/dist/withOktaAuth";
 import DynamicEventBtn from "./DynamicEventBtn";
 
@@ -52,8 +57,9 @@ export default withOktaAuth(function EventDetails(props) {
   const [image, setImage] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
   const [authenticated, setAuthenticated] = useState(null);
-  const [showModal, setShowModal] = useState(true);
-
+  const [showModal, setShowModal] = useState(false);
+  const [oldTitle, setOldTitle] = useState(true);
+  const history = useHistory();
 
   // set Authentication
   useEffect(() => {
@@ -76,8 +82,7 @@ export default withOktaAuth(function EventDetails(props) {
     formData.append("selectedStartDate", new Date());
     formData.append("description", description);
     formData.append("title", title);
-    formData.append("capacity", capacity);
-    formData.append("oldTitle", gameTitle)
+    formData.append("oldTitle", oldTitle)
 
     if (isValidFormData(formData) == true) {
       formUploader(formData);
@@ -105,10 +110,6 @@ export default withOktaAuth(function EventDetails(props) {
       alert("game title must be between 1 and 30");
       return false;
     }
-    if (capacity < 8 || capacity > 256) {
-      alert("capacity must be between 8 and 256");
-      return false;
-    }
     if (
       gameTitle.length == 0 ||
       gameTitle == undefined ||
@@ -132,6 +133,8 @@ export default withOktaAuth(function EventDetails(props) {
         }),
       });
       setShowModal(false);
+      history.push("/");
+
     }
   }
 
@@ -152,9 +155,9 @@ export default withOktaAuth(function EventDetails(props) {
     getTokens();
   }, [authenticated]);
 
-  // get stagelist
+  // updates event then moves to home screen
   useEffect(() => {
-    async function getStageList() {
+    async function sendUpdate() {
       const response = await fetch(
         `http://localhost:8080/findEventByName?eventName=${eventName}`,
         {
@@ -165,11 +168,11 @@ export default withOktaAuth(function EventDetails(props) {
         }
       ).catch((e) => console.log(e));
       const json = await response.json().catch((e) => console.log(e));
+      setOldTitle(json.data.title);
       setTournament(json.data);
-      console.log(tournament);
     }
     if (accessToken) {
-      getStageList();
+      sendUpdate();
     }
   }, [accessToken]);
 
@@ -212,8 +215,8 @@ export default withOktaAuth(function EventDetails(props) {
       size="lg"
       show={showModal}
       onHide={() => setShowModal(false)}
-      isOpen={showModal}
-    >
+      isOpen={showModal}>
+        
       <MDBModalHeader toggle={() => setShowModal(false)}></MDBModalHeader>
 
       <MDBModalBody>
@@ -319,7 +322,7 @@ export default withOktaAuth(function EventDetails(props) {
         <div className="card p-4">
           <div className="row">
             <div className="col-lg-5"></div>
-            <h2 className=" mx-3 px-1 py-3 "><a onClick={()=>{setShowModal(true)}} href="#">{eventName}</a> </h2>
+            <h2 className=" mx-3 px-1 py-3 "><a onClick={()=>{setShowModal(true);}} href="#">{eventName}</a> </h2>
           </div>
           <div className="row">
             <div className="col-3">
