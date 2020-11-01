@@ -57,7 +57,7 @@ export default withOktaAuth(function Event(props) {
     async function checkActive() {
       console.log(accessToken + " TOKEN");
       const response = await fetch(
-        `http://localhost:8080/checkEventStatus/${eventName}`,
+        `${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/checkEventStatus/${eventName}`,
         {
           headers: new Headers({
             method: "GET",
@@ -77,7 +77,7 @@ export default withOktaAuth(function Event(props) {
   useEffect(() => {
     async function getBracket() {
       const response = await fetch(
-        `http://localhost:8080/getEventBracket/${eventName}`,
+        `${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/getEventBracket/${eventName}`,
         {
           headers: new Headers({
             method: "GET",

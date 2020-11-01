@@ -72,7 +72,7 @@ export default withOktaAuth(function DynamicBtn(props) {
   const deleteEvent = useCallback(() => {
     async function deleteEvent() {
       const response = await fetch(
-        `http://localhost:8080/deleteEvent/${props.eventName}`,
+        `${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/deleteEvent/${props.eventName}`,
         {
           headers: new Headers({
             method: "post",
@@ -92,7 +92,7 @@ export default withOktaAuth(function DynamicBtn(props) {
   const enterEvent = useCallback(() => {
     async function enterEvent() {
       const response = await fetch(
-        `http://localhost:8080/joinEvent/${props.eventName}`,
+        `${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/joinEvent/${props.eventName}`,
         {
           headers: new Headers({
             method: "POST",
@@ -113,7 +113,7 @@ export default withOktaAuth(function DynamicBtn(props) {
   // function enterEvent(){
   //   if (accessToken) {
   //     fetch(
-  //       `http://localhost:8080/joinEvent/${props.eventName}`,
+  //       `${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/joinEvent/${props.eventName}`,
   //       {
   //         headers: new Headers({
   //           method: "POST",
@@ -130,7 +130,7 @@ export default withOktaAuth(function DynamicBtn(props) {
   useEffect(() => {
     async function getPrivs() {
       const response = await fetch(
-        `http://localhost:8080/checkEventPrivilege/${props.eventName}`,
+        `${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/checkEventPrivilege/${props.eventName}`,
         {
           headers: new Headers({
             method: "GET",

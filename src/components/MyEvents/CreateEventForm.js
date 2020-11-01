@@ -70,7 +70,7 @@ export default withOktaAuth(function CreateEventForm(props) {
   // will validate and post form data to backend
   function formUploader(formData) {
     if (accessToken) {
-      fetch("http://localhost:8080/createEvent", {
+      fetch("${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/createEvent", {
         method: "post",
         body: formData,
         headers: new Headers({

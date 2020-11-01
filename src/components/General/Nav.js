@@ -56,7 +56,7 @@ export default withOktaAuth(function Nav(props) {
         try{
         console.log(accessToken);
         const response = await fetch(
-          `http://localhost:8080/getUsername`,
+          `${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/getUsername`,
           {
             method: "GET",
             headers: new Headers({
@@ -121,7 +121,7 @@ export default withOktaAuth(function Nav(props) {
   // will validate and post form data to backend
   async function formUploader(formData) {
     if (accessToken) {
-      fetch("http://localhost:8080/updateUsername", {
+      fetch("${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/updateUsername", {
         method: "POST",
         body: formData,
         headers: new Headers({

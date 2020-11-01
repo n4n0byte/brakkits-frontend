@@ -65,7 +65,7 @@ export default withOktaAuth(function Home(props) {
   // update cards with search query
   useEffect(() => {
     async function storeUser() {
-      const response = await fetch(`http://localhost:8080/storeUser`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/storeUser`, {
         method: "POST",
         headers: new Headers({
           Authorization: `Bearer ${accessToken}`,
@@ -134,7 +134,7 @@ export default withOktaAuth(function Home(props) {
       }
 
       const response = await fetch(
-        `http://localhost:8080/findEvents?eventName=${searchInput}`,
+        `${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/findEvents?eventName=${searchInput}`,
         {
           headers: new Headers({
             method: "GET",

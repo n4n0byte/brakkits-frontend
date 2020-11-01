@@ -125,7 +125,7 @@ export default withOktaAuth(function EventDetails(props) {
   // will validate and post form data to backend
   function formUploader(formData) {
     if (accessToken) {
-      fetch("http://localhost:8080/updateEvent", {
+      fetch("${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/updateEvent", {
         method: "POST",
         body: formData,
         headers: new Headers({
@@ -159,7 +159,7 @@ export default withOktaAuth(function EventDetails(props) {
   useEffect(() => {
     async function sendUpdate() {
       const response = await fetch(
-        `http://localhost:8080/findEventByName?eventName=${eventName}`,
+        `${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/findEventByName?eventName=${eventName}`,
         {
           headers: new Headers({
             method: "GET",

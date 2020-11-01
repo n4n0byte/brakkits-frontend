@@ -55,7 +55,7 @@ export default withOktaAuth(function Leaderboard(props) {
   // get rankings
   useEffect(() => {
     async function leaderboard() {
-      const response = await fetch(`http://localhost:8080/leaderboard`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/leaderboard`, {
         method: "GET",
         headers: new Headers({
           Authorization: `Bearer ${accessToken}`

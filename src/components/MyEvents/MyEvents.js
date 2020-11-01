@@ -44,7 +44,7 @@ export default withOktaAuth(function MyEvents(props) {
    */
   async function getCreatedEvents() {
     if (authenticated) {
-      const response = await fetch(`http://localhost:8080/findEventsCreated/`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/findEventsCreated/`, {
         method: "GET",
         headers: new Headers({
           Authorization: `Bearer ${accessToken}`
@@ -63,7 +63,7 @@ export default withOktaAuth(function MyEvents(props) {
   async function getAttendedEvents() {
     if (authenticated) {
       const response = await fetch(
-        `http://localhost:8080/findEventsAttended/`,
+        `${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/findEventsAttended/`,
         {
           method: "GET",
           headers: new Headers({
