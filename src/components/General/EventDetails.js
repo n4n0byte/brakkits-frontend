@@ -169,6 +169,7 @@ export default withOktaAuth(function EventDetails(props) {
       ).catch((e) => console.log(e));
       const json = await response.json().catch((e) => console.log(e));
       setOldTitle(json.data.title);
+      console.log(json.data)
       setTournament(json.data);
     }
     if (accessToken) {
@@ -216,7 +217,6 @@ export default withOktaAuth(function EventDetails(props) {
       show={showModal}
       onHide={() => setShowModal(false)}
       isOpen={showModal}>
-        
       <MDBModalHeader toggle={() => setShowModal(false)}></MDBModalHeader>
 
       <MDBModalBody>

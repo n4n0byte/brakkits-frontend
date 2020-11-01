@@ -13,6 +13,11 @@ import {
   MDBNavLink,
 } from "mdbreact";
 
+import {
+  useHistory,
+} from "react-router-dom";
+
+
 import withOktaAuth from "@okta/okta-react/dist/withOktaAuth";
 
 /**
@@ -30,6 +35,7 @@ export default withOktaAuth(function DynamicBtn(props) {
   const [user, setUser] = useState(null);
   const [idToken, setIdToken] = useState(null);
   const [eventPrivs, setEventPrivs] = useState(null);
+  const history = useHistory();
 
   // set Authentication
   useEffect(() => {
@@ -62,28 +68,8 @@ export default withOktaAuth(function DynamicBtn(props) {
     getTokens();
   }, [authenticated]);
 
-  // // delete an event
-  // useEffect(() => {
-  //   async function deleteEvent() {
-  //     const response = await fetch(
-  //       `http://localhost:8080/delete/${props.eventName}`,
-  //       {
-  //         headers: new Headers({
-  //           method: "POST",
-  //           Authorization: `Bearer ${accessToken}`,
-  //         }),
-  //       }
-  //     ).catch((e) => console.log(e));
-  //     // const json = await response.json().catch((e) => console.log(e));
-  
-  //     // console.log(json);
-  //   }
-  //   if (accessToken) {
-  //     deleteEvent();
-  //   }
-  // }, [accessToken]);
 
-  const fetchRequest = useCallback(() => {
+  const deleteEvent = useCallback(() => {
     async function deleteEvent() {
       const response = await fetch(
         `http://localhost:8080/deleteEvent/${props.eventName}`,
@@ -95,7 +81,7 @@ export default withOktaAuth(function DynamicBtn(props) {
         }
       ).catch((e) => console.log(e));
       const json = await response.json().catch((e) => console.log(e));
-  
+      history.push("/");
       console.log(json);
     }
     if (accessToken) {
@@ -103,8 +89,44 @@ export default withOktaAuth(function DynamicBtn(props) {
     }
   }, [accessToken]);
 
+  const enterEvent = useCallback(() => {
+    async function enterEvent() {
+      const response = await fetch(
+        `http://localhost:8080/joinEvent/${props.eventName}`,
+        {
+          headers: new Headers({
+            method: "POST",
+            Authorization: `Bearer ${accessToken}`,
+          }),
+        }
+      )      
+      const json = await response.json().catch((e) => console.log(e));
+      // history.push("/");
+      console.log(json);
+    }
+    if (accessToken) {
+      enterEvent();
+    }
+  }, [accessToken]);
 
-  // get stagelist
+
+  // function enterEvent(){
+  //   if (accessToken) {
+  //     fetch(
+  //       `http://localhost:8080/joinEvent/${props.eventName}`,
+  //       {
+  //         headers: new Headers({
+  //           method: "POST",
+  //           Authorization: `Bearer ${accessToken}`,
+  //         }),
+  //       }
+  //     )      
+  //     .catch((e) => console.log(e));      
+  //   }
+    
+  // }
+
+  // get privs
   useEffect(() => {
     async function getPrivs() {
       const response = await fetch(
@@ -125,7 +147,8 @@ export default withOktaAuth(function DynamicBtn(props) {
     }
   }, [accessToken]);
 
-  function toggleEntry() {}
+
+  
 
   return (
     <div className="row ">
@@ -134,9 +157,7 @@ export default withOktaAuth(function DynamicBtn(props) {
           !eventPrivs.isEnteredIntoTournament ? (
             <button
               className="btn btn-primary"
-              onClick={() => {
-                alert();
-              }}
+              onClick={enterEvent}
             >
               Enter Tournament
             </button>
@@ -152,7 +173,7 @@ export default withOktaAuth(function DynamicBtn(props) {
       {eventPrivs ? (
         eventPrivs.owner ? (
           <div className="mx-auto">
-            <button onClick={fetchRequest} className="btn btn-danger">Delete Tournament</button>
+            <button onClick={deleteEvent} className="btn btn-danger">Delete Tournament</button>
           </div>
         ) : (
           <></>

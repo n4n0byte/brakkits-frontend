@@ -54,7 +54,7 @@ export default withOktaAuth(function Event(props) {
 
   // check if tournament is active
   useEffect(() => {
-    async function getBracket() {
+    async function checkActive() {
       console.log(accessToken + " TOKEN");
       const response = await fetch(
         `http://localhost:8080/checkEventStatus/${eventName}`,
@@ -66,10 +66,10 @@ export default withOktaAuth(function Event(props) {
         }
       ).catch((e) => console.log(e));
       const json = await response.json().catch((e) => console.log(e));
-      console.log(json);
+      console.log(json.data);
     }
     if (accessToken != null) {
-      getBracket();
+      checkActive();
     }
   }, [accessToken]);
 
@@ -86,7 +86,7 @@ export default withOktaAuth(function Event(props) {
         }
       ).catch((e) => console.log(e));
       const json = await response.json().catch((e) => console.log(e));
-      console.log(json);
+      console.log(json)
       setBracketData(json);
     }
     getBracket();
@@ -109,8 +109,7 @@ export default withOktaAuth(function Event(props) {
               <ReactTournament
                 aspectRatio={1}
                 width={4}
-
-                data={bracketData.data}
+                data={bracketData.data.rounds}
               />
             )}
           </MDBCardBody>

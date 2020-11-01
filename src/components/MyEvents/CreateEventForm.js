@@ -139,7 +139,8 @@ export default withOktaAuth(function CreateEventForm(props) {
       alert("game title must be between 1 and 30");
       return false;
     }
-    if (capacity < 8 || capacity > 256) {
+    
+    if (capacity < 2 || capacity > 256) {
       alert("capacity must be between 8 and 256");
       return false;
     }

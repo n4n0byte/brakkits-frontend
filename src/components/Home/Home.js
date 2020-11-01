@@ -93,7 +93,7 @@ export default withOktaAuth(function Home(props) {
       try{
       console.log(accessToken);
       const response = await fetch(
-        `http://localhost:8080/getTopEvents/${maxEvents}`,
+        `${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/getTopEvents/${maxEvents}`,
         {
           method: "GET",
           headers: new Headers({

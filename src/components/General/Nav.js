@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../../App.css";
 
 import {
@@ -44,7 +44,7 @@ export default withOktaAuth(function Nav(props) {
   const [username, setUsername] = useState();
   const [accessToken, setAccessToken] = useState(null);
   const [tag, setTag] = useState();
-  
+  const history = useHistory();
 
   useEffect(() => {
     getUsername();
@@ -116,8 +116,10 @@ export default withOktaAuth(function Nav(props) {
     return true;
   }
 
+  
+
   // will validate and post form data to backend
-  function formUploader(formData) {
+  async function formUploader(formData) {
     if (accessToken) {
       fetch("http://localhost:8080/updateUsername", {
         method: "POST",
@@ -127,7 +129,7 @@ export default withOktaAuth(function Nav(props) {
         }),
       });
       setShowModal(false);
-      // history.push("/");
+      history.push("/");
 
     }
   }
@@ -163,7 +165,7 @@ export default withOktaAuth(function Nav(props) {
     >
       <MDBNavItem>
         <MDBNavLink className="black-text" disabled={false} to={"/"}>
-          Brakkits{" | " + tag }
+          Brakkits{tag !== undefined && " | " + tag }
         </MDBNavLink>
       </MDBNavItem>
       {/* only render links if they are present */}
