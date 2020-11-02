@@ -125,7 +125,7 @@ export default withOktaAuth(function EventDetails(props) {
   // will validate and post form data to backend
   function formUploader(formData) {
     if (accessToken) {
-      fetch("${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/updateEvent", {
+      fetch(`${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/updateEvent`, {
         method: "POST",
         body: formData,
         headers: new Headers({
@@ -308,7 +308,7 @@ export default withOktaAuth(function EventDetails(props) {
                     onClick={validateAndSendData}
                     className="btn btn-primary btn-sm"
                   >
-                    Create
+                    Update
                   </button>
                 </div>
               </div>

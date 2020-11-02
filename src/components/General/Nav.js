@@ -121,7 +121,7 @@ export default withOktaAuth(function Nav(props) {
   // will validate and post form data to backend
   async function formUploader(formData) {
     if (accessToken) {
-      fetch("${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/updateUsername", {
+      fetch(`${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/updateUsername`, {
         method: "POST",
         body: formData,
         headers: new Headers({
