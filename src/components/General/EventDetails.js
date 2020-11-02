@@ -192,6 +192,7 @@ export default withOktaAuth(function EventDetails(props) {
       </li>
     ));
   }
+  
 
   /**
    * builds the Attendees List
