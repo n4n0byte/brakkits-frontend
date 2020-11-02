@@ -162,7 +162,7 @@ export default withOktaAuth(function EventDetails(props) {
         `${process.env.REACT_APP_BACKEND_SERVER_ADDRESS}/findEventByName?eventName=${eventName}`,
         {
           headers: new Headers({
-            method: "GET",
+            method: "POST",
             Authorization: `Bearer ${accessToken}`,
           }),
         }
